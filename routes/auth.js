@@ -18,7 +18,7 @@ router.post(
 
 			return res.json({
 				message: 'Signup successful',
-				user: req,
+				user: req.body,
 			})
 		})(req, res, next)
 	},
@@ -39,7 +39,7 @@ router.post(
 				// We don't want to store the sensitive information such as the password
 				// Sign the JWT token and populate the payload with the user email and id
 				console.log(user)
-				const token = jwt.sign({ user: user.username }, 'top_secret')
+				const token = jwt.sign({ user: user.username }, process.env.SECRET_KEY, {})
 				// Send back the token to the user
 				return res.json({ token })
 			})

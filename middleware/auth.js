@@ -14,7 +14,7 @@ passport.use(
 		},
 		async (username, password, done) => {
 			try {
-				const checkUsername = await User.checkExistingField('username', username)
+				const checkUsername = await User.checkExistingField('username', username.trim())
 				if (checkUsername)
 					return done(null, false, {
 						statusCode: 409,
@@ -58,7 +58,8 @@ passport.use(
 
 			// Validate password and make sure it matches with the corresponding hash stored in the database
 			// If the passwords match, it returns a value of true.
-			const validate = await user.isValidPassword(password)
+			const validate = user.password === password
+			console.log(validate)
 			if (!validate)
 				return done(null, false, {
 					statusCode: 409,
@@ -78,12 +79,12 @@ passport.use(
 
 const opts = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: 'secret',
+	secretOrKey: process.env.SECRET_KEY,
 }
 passport.use(
 	'jwt',
 	new JwtStrategy(opts, (jwtPayload, done) => {
-		User.findOne({ id: jwtPayload.sub }, (err, user) => {
+		User.findOne({ username: jwtPayload.user }, (err, user) => {
 			if (err)
 				return done(err, false)
 

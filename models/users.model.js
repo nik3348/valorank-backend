@@ -16,12 +16,6 @@ const userSchema = new Schema({
 	},
 })
 
-// We'll use this later on to make sure that the user trying to log in has the correct credentials
-userSchema.methods.isValidPassword = async password => {
-	// Database matches the one sent. Returns true if it does else false.
-	return password === this.password
-}
-
 userSchema.statics.checkExistingField = (field, value) => User.findOne({ [`${ field }`]: value }).exec()
 
 // Compile model from schema

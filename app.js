@@ -1,6 +1,7 @@
 require('dotenv').config()
 const createError = require('http-errors')
 const express = require('express')
+const passport = require('passport')
 
 const server = express()
 const helmet = require('helmet')
@@ -36,7 +37,7 @@ require('./middleware/auth')
 
 // Routes
 server.use('/', authRouter)
-server.use('/users', usersRouter)
+server.use('/users', passport.authenticate('jwt', { session: false }), usersRouter)
 
 // catch 404 and forward to error handler
 server.use((req, res, next) => {
