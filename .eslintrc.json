@@ -5,7 +5,9 @@
         "node": true
     },
     "extends": [
-        "airbnb-base"
+        "node/style-guide",
+        "plugin:import/errors",
+        "plugin:import/warnings"
     ],
     "parserOptions": {
         "ecmaVersion": 2020
