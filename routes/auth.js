@@ -40,7 +40,11 @@ router.post(
 				// Sign the JWT token and populate the payload with the user email and id
 				const token = jwt.sign({ user: user.username }, process.env.SECRET_KEY, {})
 				// Send back the token to the user
-				return res.json({ token })
+				return res.json({
+					auth: true,
+					token: token,
+					user: user,
+				})
 			})
 		})(req, res, next)
 	},

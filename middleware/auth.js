@@ -25,6 +25,7 @@ passport.use(
 				const user = await User.create({
 					username,
 					password,
+					isAdmin: false,
 				})
 				// Send the user information to the next middleware
 				return done(null, user, {})
