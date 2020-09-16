@@ -59,7 +59,6 @@ passport.use(
 			// Validate password and make sure it matches with the corresponding hash stored in the database
 			// If the passwords match, it returns a value of true.
 			const validate = user.password === password
-			console.log(validate)
 			if (!validate)
 				return done(null, false, {
 					statusCode: 409,
