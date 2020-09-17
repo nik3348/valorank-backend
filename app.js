@@ -10,6 +10,7 @@ const cors = require('cors')
 const compression = require('compression')
 const logger = require('morgan')
 
+const process = require('process')
 const mongoose = require('mongoose')
 const usersRouter = require('./routes/users')
 const authRouter = require('./routes/auth')
@@ -55,4 +56,12 @@ server.use((err, req, res, next) => {
 	res.send(err.message)
 })
 
+process.on('SIGTERM', () => {
+	debug('SIGTERM signal received: closing HTTP server')
+	server.close(() => {
+		debug('HTTP server closed')
+	})
+})
+
+// TODO: Add health check
 server.listen(3000, () => console.log('Server started!'))
