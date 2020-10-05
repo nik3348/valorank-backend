@@ -41,7 +41,6 @@ router.post(
 				const token = jwt.sign({ user: user.username }, process.env.SECRET_KEY, {})
 				// Send back the token to the user
 				return res.json({
-					auth: true,
 					token: token,
 					user: user,
 				})
