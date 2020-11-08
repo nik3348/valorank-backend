@@ -1,12 +1,12 @@
-FROM node:12
+FROM node:12-slim
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json ./
+COPY package.json /app
 RUN npm install --production
 
-COPY . .
+COPY . /app
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "build" ]
+CMD ["npm", "run", "build"]
